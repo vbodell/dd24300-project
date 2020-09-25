@@ -1,0 +1,8 @@
+# TODO: Versioning
+tensorflow==2.0.0
+pandas
+jupyterlab==2.2.6
+numpy
+scikit-learn
+scipy
+matplotlib
