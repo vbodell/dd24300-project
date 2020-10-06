@@ -9,8 +9,8 @@ cd covid19
 pip3 install -r requirements.txt
 
 echo "Get Dataset"
-wget https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
-unzip COVID-19\ Dataset.zip
+#wget https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
+#unzip COVID-19\ Dataset.zip
 
-python generate.py
-python train.py
+#python generate.py
+#python train.py
