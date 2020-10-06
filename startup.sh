@@ -6,8 +6,11 @@ echo "Update pip"
 curl https://bootstrap.pypa.io/get-pip.py | sudo python3
 pip install --upgrade setuptools
 
-# For the packages used in the repo
+# Required to get packages working
+sudo apt install libgl1-mesa-glx -y
+sudo apt update
 pip install six>=1.13.0
+
 
 # Get github repo
 echo "Get repo"
@@ -17,7 +20,9 @@ pip install -r requirements.txt
 
 echo "Get Dataset"
 #wget https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
-#unzip COVID-19\ Dataset.zip
+#sudo unzip 8h65ywd2jr-3.zip
+#sudo unzip COVID-19\ Dataset.zip
 
-#python generate.py
-#python train.py
+#sudo python3 generate.py
+#wandb login <APIKEY>
+#sudo python3 train.py
