@@ -1,5 +1,5 @@
 # TODO: Versioning
-tensorflow==2.3.0
+tensorflow>=2.3.1
 pandas
 jupyterlab==2.2.6
 numpy
