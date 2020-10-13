@@ -14,21 +14,27 @@ sudo pip install six>=1.13.0
 # Get environment variables
 APIKEY=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/APIKEY -H Metadata-Flavor:Google)
 GITHUB_PWD=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/GITHUB_PWD -H Metadata-Flavor:Google)
+FETCH_AND_PROCESS_DATASET=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/FETCH_AND_PROCESS_DATASET -H Metadata-Flavor:Google)
 
-echo "Using env vars APIKEY=$APIKEY, GITHUB_PWD=$GITHUB_PWD"
+echo "Using env vars APIKEY=$APIKEY, GITHUB_PWD=$GITHUB_PWD, FETCH_AND_PROCESS_DATASET=$FETCH_AND_PROCESS_DATASET"
 
 # Get github repo
 echo "Get repo"
 git clone https://carpool-master:$GITHUB_PWD@github.com/ErikBavenstrand/covid19.git
 cd covid19
-pip install -r requirements.txt
+sudo pip install -r requirements.txt
 
-echo "Get Egypt Dataset"
-wget -q https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
-sudo -q unzip 8h65ywd2jr-3.zip
-sudo -q unzip COVID-19\ Dataset.zip
-sudo rm 8h65ywd2jr-3.zip COVID-19\ Dataset.zip
+if $FETCH_AND_PROCESS_DATASET; then
+    echo "Get Egypt Dataset file, can take a couple of minutes..."
+    wget -q https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
+    echo "Unzipping dataset. Will probably also take a little while..."
+    sudo -q unzip 8h65ywd2jr-3.zip
+    sudo -q unzip COVID-19\ Dataset.zip
+    sudo rm 8h65ywd2jr-3.zip COVID-19\ Dataset.zip
 
-sudo python3 generate.py
-sudo wandb login $APIKEY
+    echo "Generate the tfrecords"
+    sudo python3 generate.py
+fi
+
+#sudo wandb login $APIKEY
 #sudo python3 train.py
