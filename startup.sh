@@ -19,10 +19,10 @@ cd covid19
 pip install -r requirements.txt
 
 echo "Get Dataset"
-#wget https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
-#sudo unzip 8h65ywd2jr-3.zip
-#sudo unzip COVID-19\ Dataset.zip
+wget https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
+sudo unzip 8h65ywd2jr-3.zip
+sudo unzip COVID-19\ Dataset.zip
 
-#sudo python3 generate.py
+sudo python3 generate.py
 #wandb login <APIKEY>
 #sudo python3 train.py
