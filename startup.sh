@@ -1,15 +1,15 @@
 echo "Install packages"
-sudo apt-get -q update
-sudo apt-get -q install git wget unzip -y
-sudo apt-get -q install python python3-pip -y
+sudo apt-get update -q
+sudo apt-get install -q git wget unzip -y
+sudo apt-get install -q python python3-pip -y
 
 echo "Update pip"
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
-sudo pip install --upgrade setuptools
+sudo pip install -q --upgrade setuptools
 
 # Required to get packages working
-sudo apt-get -q install libgl1-mesa-glx -y
-sudo pip install six>=1.13.0
+sudo apt-get install -q libgl1-mesa-glx -y
+sudo pip install -q six==1.13.0
 
 # Get environment variables
 APIKEY=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/APIKEY -H Metadata-Flavor:Google)
@@ -22,7 +22,7 @@ echo "Using env vars APIKEY=$APIKEY, GITHUB_PWD=$GITHUB_PWD, FETCH_AND_PROCESS_D
 echo "Get repo"
 git clone https://carpool-master:$GITHUB_PWD@github.com/ErikBavenstrand/covid19.git
 cd covid19
-sudo pip install -r requirements.txt
+sudo pip install -q -r requirements.txt
 
 if $FETCH_AND_PROCESS_DATASET; then
     echo "Get Egypt Dataset file, can take a couple of minutes..."
