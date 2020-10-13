@@ -3,6 +3,17 @@ sudo apt-get update -q
 sudo apt-get install -q git wget unzip -y
 sudo apt-get install -q python python3-pip -y
 
+echo "SCRIPT: Add the cuda repo"
+sudo curl -O https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+sudo add-apt-repository "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+
+sudo apt update -q
+sudo apt install cuda -q -y
+echo "SCRIPT: Verify cuda installation"
+nvidia-smi
+
 echo "SCRIPT: Update pip"
 curl -s https://bootstrap.pypa.io/get-pip.py | sudo python3
 sudo pip install -q --upgrade setuptools
@@ -28,13 +39,13 @@ if $FETCH_AND_PROCESS_DATASET; then
     echo "SCRIPT: Get Egypt Dataset file, can take a couple of minutes..."
     wget -q https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/8h65ywd2jr-3.zip
     echo "SCRIPT: Unzipping dataset. Will probably also take a little while..."
-    sudo -q unzip 8h65ywd2jr-3.zip
-    sudo -q unzip COVID-19\ Dataset.zip
+    sudo unzip -q 8h65ywd2jr-3.zip
+    sudo unzip -q COVID-19\ Dataset.zip
     sudo rm 8h65ywd2jr-3.zip COVID-19\ Dataset.zip
 
     echo "SCRIPT: Generate the tfrecords"
     sudo python3 generate.py
 fi
 
-#sudo wandb login $APIKEY
-#sudo python3 train.py
+sudo wandb login $APIKEY
+sudo python3 train.py
